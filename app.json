@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "my-mobile-notepad",
-    "slug": "my-mobile-notepad",
+    "name": "My portable notepad",
+    "slug": "My portable notepad",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./Assets/Images/Icons/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./Assets/Images/Icons/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -19,12 +19,18 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./Assets/Images/Icons/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
-    }
+      "favicon": "./Assets/Images/Icons/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a6bd5164-00c6-4b83-ac91-4b573ba06f16"
+      }
+    },
+    "owner": "miguellb"
   }
 }
