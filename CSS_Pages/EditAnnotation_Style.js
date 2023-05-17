@@ -7,23 +7,23 @@ export default StyleSheet.create({
         paddingVertical: 15,
 
         backgroundColor: "rgb(0, 135, 230)",
-
-        width: "100%"
-
     },
 
     Title: {
         
         fontSize: 25,
 
-        textAlign: "center",
+        textAlign: "left",
 
         color: "#ffffff",
+
+        width: "66%"
     },
 
     RowContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
+        flexDirection: "row",
+
+        alignItems: "center"
     },
 
     LeftIcon: {
@@ -44,10 +44,6 @@ export default StyleSheet.create({
 
         width: 30,
         height: 30,
-    },
-
-    Main: {
-        height: "100%",
     },
 
     TextBox: {
@@ -96,4 +92,5 @@ export default StyleSheet.create({
 
         color: "white",
     },
+    
 })

@@ -1,7 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
-import { View, TouchableOpacity, TextInput, ScrollView, Image } from 'react-native';
+import { View, TouchableOpacity, TextInput, ScrollView, Image, Alert, ToastAndroid } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 import App_Style from '../CSS_Pages/EditAnnotation_Style';
 
@@ -30,18 +31,44 @@ export default function App(props) {
                 style={App_Style.SaveBox} 
 
                 onPress={() => { 
+                  if (title != "" && content != "") {
                     props.setannotations((prevState) => {
-                        return prevState.map((annotation) => {
-                        if (annotation.title === props.annotations[props.selectedannotation].title) {
-                            return { ...annotation, 
-                              title: title,
-                              content: content
-                            };
-                        }
-                        return annotation;
-                        });
+                      const updatedAnnotations = [...prevState];
+                        updatedAnnotations[props.selectedannotation] = {
+                        ...updatedAnnotations[props.selectedannotation],
+                        title: title,
+                        content: content,
+                      };
+
+                      ToastAndroid.show('Annotation Saved', ToastAndroid.SHORT);
+                      
+                      return updatedAnnotations;
                     });
-                }}>
+                  } else if (title == "" && content == ""){
+                    Alert.alert(
+                      "Insert a title and annotation.",
+                      "You need to enter a title and annotation for it to be saved.",
+                      [
+                        { text: "OK" }
+                      ]
+                    );
+                  } else if (title == ""){
+                    Alert.alert(
+                      "Insert a title.",
+                      "You need to enter a title for it to be saved.",
+                      [
+                        { text: "OK" }
+                      ]
+                    );
+                  } else if (content == ""){
+                    Alert.alert(
+                      "Insert an annotation.",
+                      "You need to enter an annotation for it to be saved.",
+                      [
+                        { text: "OK" }
+                      ]
+                    );
+                  }                }}>
                     
                 <Image
                     style={App_Style.SaveIcon}
@@ -54,7 +81,14 @@ export default function App(props) {
           <StatusBar hidden></StatusBar>
           
             <ScrollView style={App_Style.Text_Box}>
-                <TextInput style={App_Style.TextInput} onChangeText={(text) => {setContent(text)}} multiline={true} numberOfLines={15} value={content}></TextInput>
+                <TextInput 
+                  style={App_Style.TextInput} 
+                  onChangeText={(text) => {setContent(text)}} 
+                  multiline={true} 
+                  numberOfLines={15} 
+                  value={content}
+                  placeholder="Your annotation here..."
+                ></TextInput>
             </ScrollView>
         </View>
       </View>
