@@ -22,8 +22,8 @@ export default StyleSheet.create({
 
     RowContainer: {
         flexDirection: "row",
-
-        alignItems: "center"
+        
+        alignItems: "center",
     },
 
     LeftIcon: {
@@ -91,6 +91,5 @@ export default StyleSheet.create({
         paddingTop: 3,
 
         color: "white",
-    },
-    
+    }   
 })

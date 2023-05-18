@@ -1,41 +1,50 @@
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
-import { View, TouchableOpacity, TextInput, ScrollView, Image, Alert, ToastAndroid } from 'react-native';
+import { View, TouchableOpacity, TextInput, ScrollView, Image, Alert, ToastAndroid, ImageBackground } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
-import App_Style from '../CSS_Pages/EditAnnotation_Style';
+import EditItens from '../CSS_Pages/EditItens_Style';
 
 export default function App(props) {
-  const [title, setTitle] = useState(props.annotations[props.selectedannotation].title);
-  const [content, setContent] = useState(props.annotations[props.selectedannotation].content);
+  const [title, setTitle] = useState(props.annotations[props.selectedannotation - 1].title);
+  const [content, setContent] = useState(props.annotations[props.selectedannotation - 1].content);
 
   return(
-      <View>
-        <View style={App_Style.Title_Box}>
-          <View style={App_Style.RowContainer}>
-            <TouchableOpacity onPress={() => {props.setselectedannotation("")}}>
+      <ScrollView style={EditItens.Main}>
+        <View style={EditItens.Title_Box}>
+          <View style={EditItens.RowContainer}>
+            <TouchableOpacity onPress={() => {
+                if (title == "" || content == "") {
+                  props.setannotations((prevState) => {
+
+                    const updatedAnnotations = [...prevState];
+                    updatedAnnotations.pop()
+                    return updatedAnnotations;
+                  });
+                }
+
+                props.setselectedannotation("")
+              }}>
                 <Image
-                    style={App_Style.LeftIcon}
+                    style={EditItens.LeftIcon}
                     source={require("../Assets/Images/Icons/Return.png")}
                 />
             </TouchableOpacity>
             <TextInput
                 autoFocus={true}
-                style={App_Style.Title}
+                style={EditItens.Title}
                 value={title}
                 onChangeText={(text) => setTitle(text)}
                 placeholder='Your title...'
             />
             <TouchableOpacity 
-                style={App_Style.SaveBox} 
+                style={EditItens.SaveBox} 
 
                 onPress={() => { 
                   if (title != "" && content != "") {
                     props.setannotations((prevState) => {
                       const updatedAnnotations = [...prevState];
-                        updatedAnnotations[props.selectedannotation] = {
-                        ...updatedAnnotations[props.selectedannotation],
+                      updatedAnnotations[props.selectedannotation - 1] = {...updatedAnnotations[props.selectedannotation - 1],
                         title: title,
                         content: content,
                       };
@@ -71,27 +80,26 @@ export default function App(props) {
                   }                }}>
                     
                 <Image
-                    style={App_Style.SaveIcon}
+                    style={EditItens.SaveIcon}
                     source={require("../Assets/Images/Icons/Save.png")}
                 />
             </TouchableOpacity>
           </View>
         </View>
-        <View style={App_Style.Main}>
+        <View style={EditItens.AnnotationArea}>
           <StatusBar hidden></StatusBar>
-          
-            <ScrollView style={App_Style.Text_Box}>
-                <TextInput 
-                  style={App_Style.TextInput} 
-                  onChangeText={(text) => {setContent(text)}} 
-                  multiline={true} 
-                  numberOfLines={15} 
-                  value={content}
-                  placeholder="Your annotation here..."
-                ></TextInput>
+            <ScrollView style={EditItens.Text_Box}>
+                  <TextInput 
+                    style={EditItens.TextInput} 
+                    onChangeText={(text) => {setContent(text)}} 
+                    multiline={true} 
+                    numberOfLines={15} 
+                    value={content}
+                    placeholder="Your annotation here..."
+                  ></TextInput>
             </ScrollView>
         </View>
-      </View>
+      </ScrollView>
   )
 }
 
